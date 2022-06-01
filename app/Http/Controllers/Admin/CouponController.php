@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class CouponController extends Controller
 {
     public function add_new()
-    {$resturants = Restaurant::select('id', 'Profit_Ratio')->get();
+    {$resturants = Restaurant::where('Profit_Ratio','>',0)->select('id', 'Profit_Ratio')->get();
         foreach ($resturants as $key => $resturant) {
             $totalAmount = Order::where('restaurant_id', $resturant['id'])->sum('order_amount');
             $monthly_percentage = $resturant['Profit_Ratio'];

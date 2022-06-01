@@ -141,6 +141,7 @@ class MyfatoorahController extends Controller
     }
     public function oncomplete_cart(Request $request)
     {
+        $data['order_status'] = 'pending';
         $data['payment_status'] = 'paid';
         $updated_after_payment = Order::where('id', $request->order_id)->update($data);
         if ($updated_after_payment) {
