@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function payment(Request $request)
+    public function register_resturant_payment(Request $request)
     {
         if ($request->has('callback')) {
             Order::where(['id' => $request->order_id])->update(['callback' => $request['callback']]);
@@ -21,13 +21,12 @@ class PaymentController extends Controller
             session()->put('code', $request->code);
             $resturant = Restaurant::findOrFail($request['resturant_id']);
         }
-//        show price after coupone
+        //show price after coupon
         $annual_subscription = BusinessSetting::where('key', 'Annual_subscription')->first()->value;
         if ($request->code) {
             $exists_coupon = RegisterCoupon::where('code', $request->code)->where('status', 1)->where('limit', '>', 0)->first();
             if ($exists_coupon) {
                 $data['done'] = true;
-
                 if ($exists_coupon->discount_type == 'percent') {
                     $discount_persentage = $exists_coupon->discount / 100;
                     $discount = $discount_persentage * $annual_subscription;
@@ -46,7 +45,6 @@ class PaymentController extends Controller
             } else {
                 return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'you should choose valid coupon']], 403);
             }
-
         } else {
             session()->put('new_price', $annual_subscription);
         }
@@ -58,6 +56,19 @@ class PaymentController extends Controller
             ];
             session()->put('data', $data);
             return view('payment-view');
+        }
+        return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'Data not found']], 403);
+    }
+
+    public function cart_payment(Request $request)
+    {
+        if ($request->has('callback')) {
+            Order::where(['id' => $request->order_id])->update(['callback' => $request['callback']]);
+        }
+        if (isset($request['order_id'])) {
+            session()->put('order_id', $request['order_id']);
+            session()->put('customer_id', $request->customer_id);
+            return view('payment-cart-view');
         }
         return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'Data not found']], 403);
     }

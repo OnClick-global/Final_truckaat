@@ -23,10 +23,10 @@ Route::get('privacy-policy', 'HomeController@privacy_policy')->name('privacy-pol
 //Payment
 //first page with knet and phonecash images
 Route::group(['prefix' => 'payment-mobile'], function () {
-    Route::get('/', 'PaymentController@payment')->name('payment-mobile'); //send in it {code}/{resturant_id}/{new_price}
+    Route::get('/', 'PaymentController@cart_payment')->name('payment-mobile'); //send in it {code}/{resturant_id}/{new_price}
     Route::get('set-payment-method/{name}', 'PaymentController@set_payment_method')->name('set-payment-method');
 });
-Route::get('/payment-vendor', 'PaymentController@payment')->name('payment-vendor'); //send in it {code}/{resturant_id}/{new_price}
+Route::get('/payment-vendor', 'PaymentController@register_resturant_payment')->name('payment-vendor'); //send in it {code}/{resturant_id}/{new_price}
 
 
 Route::get("/payment", "PaymentController@DoPayment");
@@ -37,9 +37,15 @@ Route::get('payment-success', 'PaymentController@success')->name('payment-succes
 Route::get('payment-fail', 'PaymentController@fail')->name('payment-fail');
 
 //myfatoorah seond step
+
+//restaurant register
 Route::post('pay-myfatoorah', 'MyfatoorahController@paywith')->name('pay-myfatoorah');
 Route::get('myfatoorah-status', 'MyfatoorahController@getPaymentStatus')->name('myfatoorah-status');
 Route::get('myfatoorah-oncomplate', 'MyfatoorahController@oncomplate')->name('myfatoorah-oncomplate');
+
+//cart
+Route::post('pay-cart-myfatoorah', 'MyfatoorahController@paywith_cart')->name('pay-cart-myfatoorah');
+Route::get('myfatoorah-cart-oncomplete', 'MyfatoorahController@oncomplete_cart')->name('myfatoorah-cart-oncomplate');
 
 
 Route::get('authentication-failed', function () {

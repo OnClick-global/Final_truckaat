@@ -199,6 +199,59 @@ class CustomerAuthController extends Controller
             'phone' => 'required',
             'password' => 'required|min:6'
         ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+        $data = [
+            'phone' => $request->phone,
+            'password' => $request->password
+        ];
+        $customer_verification = BusinessSetting::where('key','customer_verification')->first()->value;
+        if (auth()->guard('customer')->attempt($data)) {
+            $token = auth()->guard('customer')->user()->createToken('RestaurantCustomerAuth')->accessToken;
+            if(!auth()->user()->status)
+            {
+                $errors = [];
+                array_push($errors, ['code' => 'auth-003', 'message' => trans('messages.your_account_is_blocked')]);
+                return response()->json([
+                    'errors' => $errors
+                ], 403);
+            }
+            if($customer_verification && !auth()->guard('customer')->is_phone_verified && env('APP_MODE') != 'demo')
+            {
+                $otp = rand(1000, 9999);
+                DB::table('phone_verifications')->updateOrInsert(['phone' => $request['phone']],
+                    [
+                        'token' => $otp,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                $response = SMS_module::send($request['phone'],$otp);
+                if($response != 'success')
+                {
+                    $errors = [];
+                    array_push($errors, ['code' => 'otp', 'message' => trans('messages.faield_to_send_sms')]);
+                    return response()->json([
+                        'errors' => $errors
+                    ], 405);
+                }
+            }
+            return response()->json(['token' => $token, 'is_phone_verified'=>auth()->guard('customer')->is_phone_verified], 200);
+        } else {
+            $errors = [];
+            array_push($errors, ['code' => 'auth-001', 'message' => 'Unauthorized.']);
+            return response()->json([
+                'errors' => $errors
+            ], 401);
+        }
+    }
+
+    public function login_old(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+            'password' => 'required|min:6'
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
