@@ -26,6 +26,8 @@ Route::group(['prefix' => 'payment-mobile'], function () {
     Route::get('/', 'PaymentController@payment')->name('payment-mobile'); //send in it {code}/{resturant_id}/{new_price}
     Route::get('set-payment-method/{name}', 'PaymentController@set_payment_method')->name('set-payment-method');
 });
+Route::get('/payment-vendor', 'PaymentController@payment')->name('payment-vendor'); //send in it {code}/{resturant_id}/{new_price}
+
 
 Route::get("/payment", "PaymentController@DoPayment");
 Route::post("/payment/show/phone_page/{payway}/{id}/{user_id}", "PaymentController@show_phone_page")->name('show_phone_page');

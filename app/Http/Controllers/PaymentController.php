@@ -16,11 +16,11 @@ class PaymentController extends Controller
         if ($request->has('callback')) {
             Order::where(['id' => $request->order_id])->update(['callback' => $request['callback']]);
         }
-        session()->put('resturant_id', $request['resturant_id']);
-        session()->put('code', $request->code);
-
-        $resturant = Restaurant::findOrFail($request['resturant_id']);
-
+        if (isset($request['resturant_id'])) {
+            session()->put('resturant_id', $request['resturant_id']);
+            session()->put('code', $request->code);
+            $resturant = Restaurant::findOrFail($request['resturant_id']);
+        }
 //        show price after coupone
         $annual_subscription = BusinessSetting::where('key', 'Annual_subscription')->first()->value;
         if ($request->code) {
@@ -59,7 +59,6 @@ class PaymentController extends Controller
             session()->put('data', $data);
             return view('payment-view');
         }
-
         return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'Data not found']], 403);
     }
 
