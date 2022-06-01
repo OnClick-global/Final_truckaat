@@ -79,6 +79,7 @@ class MyfatoorahController extends Controller
         if ($request->code) {
             $exists_coupon = RegisterCoupon::where('code', $request->code)->where('status', 1)->where('limit', '>', 0)->first();
             if ($exists_coupon) {
+                $exists_coupon->total_uses = $exists_coupon->total_uses + 1;
                 $exists_coupon->limit = $exists_coupon->limit - 1;
                 $exists_coupon->save();
             }
