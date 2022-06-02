@@ -87,7 +87,12 @@ class Food extends Model
         foreach ($this->category_ids as $row) {
             if ($row['position'] == 2) {
                 $category = Category::where('id',$row['id'])->first();
-               return $category->name ;
+                if($category){
+                    return $category->name ;
+                }else{
+                    return null ;
+
+                }
             }
         }
     }
