@@ -35,7 +35,7 @@ class MyfatoorahController extends Controller
         $price = session('new_price');
         $root_url = $request->root();
         $path = env('myfatoorah_path');
-        $token = env('myfatoorah_token');
+        $token ='bearer '. env('myfatoorah_token');
         $headers = array(
             'Authorization:' . $token,
             'Content-Type:application/json'
@@ -107,7 +107,7 @@ class MyfatoorahController extends Controller
         $price = $order->order_amount;
         $root_url = $request->root();
         $path = env('myfatoorah_path');
-        $token = env('myfatoorah_token');
+        $token = 'bearer '. env('myfatoorah_token');
         $headers = array(
             'Authorization:' . $token,
             'Content-Type:application/json'
