@@ -170,6 +170,11 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::get('/useonce/{id}', 'BannerController@useonce');
     });
 
+    Route::group(['prefix' => 'coupon'], function () {
+        Route::get('/apply', 'CouponController@apply');
+        Route::get('/list', 'CouponController@list');
+    });
+
 
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', 'CategoryController@get_categories');
