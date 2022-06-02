@@ -171,8 +171,8 @@ Route::group(['namespace' => 'Api\V1'], function () {
     });
 
     Route::group(['prefix' => 'coupon'], function () {
-        Route::get('/apply', 'CouponController@apply');
-        Route::get('/list', 'CouponController@list');
+        Route::get('apply', 'CouponController@apply');
+        Route::get('list', 'CouponController@list');
     });
 
 

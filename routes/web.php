@@ -45,7 +45,7 @@ Route::get('myfatoorah-oncomplate', 'MyfatoorahController@oncomplate')->name('my
 
 //cart
 Route::post('pay-cart-myfatoorah', 'MyfatoorahController@paywith_cart')->name('pay-cart-myfatoorah');
-Route::get('myfatoorah-cart-oncomplete', 'MyfatoorahController@oncomplete_cart')->name('myfatoorah-cart-oncomplate');
+Route::get('myfatoorah-cart-oncomplete', 'MyfatoorahController@oncomplete_cart')->name('myfatoorah-cart-oncomplete');
 
 
 Route::get('authentication-failed', function () {
