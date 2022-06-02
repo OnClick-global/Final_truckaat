@@ -170,10 +170,7 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::get('/useonce/{id}', 'BannerController@useonce');
     });
 
-    Route::group(['prefix' => 'coupon'], function () {
-        Route::get('apply', 'CouponController@apply');
-        Route::get('list', 'CouponController@list');
-    });
+
 
 
     Route::group(['prefix' => 'categories'], function () {
@@ -181,6 +178,10 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::get('childes/{category_id}', 'CategoryController@get_childes');
         Route::get('products/{category_id}', 'CategoryController@get_products');
         Route::get('products/{category_id}/all', 'CategoryController@get_all_products');
+    });
+    Route::group(['prefix' => 'coupon', 'middleware' => 'auth:api'], function () {
+        Route::get('apply', 'CouponController@apply');
+        Route::get('list', 'CouponController@list');
     });
 
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
@@ -190,6 +191,8 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::post('update-interest', 'CustomerController@update_interest');
         Route::put('cm-firebase-token', 'CustomerController@update_cm_firebase_token');
         Route::get('suggested-foods', 'CustomerController@get_suggested_food');
+
+
 
         Route::group(['prefix' => 'address'], function () {
             Route::get('list', 'CustomerController@address_list');
