@@ -44,7 +44,7 @@ class VendorController extends Controller
             'restaurant_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:restaurants',
             'longitude' => 'required',
             'email' => 'required|unique:vendors',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:vendors',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:8|unique:vendors',
             'minimum_delivery_time' => 'required|regex:/^([0-9]{2})$/|min:2|max:2',
             'maximum_delivery_time' => 'required|regex:/^([0-9]{2})$/|min:2|max:2',
             'password' => 'required|min:6',
