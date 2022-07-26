@@ -39,13 +39,13 @@ class ConfigController extends Controller
                 [
                     'name'    => 'الكويت',
                     'code'    => 'kw',
-                    'domain'  => 'https://truckaat-co.com/',
+                    'domain'  => 'https://truckaat-co.com',
                     'image'   => 'https://cdn.countryflags.com/thumbs/kuwait/flag-round-250.png'
                 ],
                 [
                     'name'    => 'السعودية',
                     'code'    => 'sa',
-                    'domain'  => 'https://truckaat-co.com/',
+                    'domain'  => 'https://truckaat-co.com',
                     'image'   => 'https://cdn.countryflags.com/thumbs/kuwait/flag-round-250.png'
                 ],
             ],
