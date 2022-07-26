@@ -35,6 +35,12 @@ class ConfigController extends Controller
 
         // $dp = json_decode(BusinessSetting::where(['key' => 'digital_payment'])->first()->value, true);
         return response()->json([
+            'countries' => [
+                'name'    => 'الكويت',
+                'code'    => 'kw',
+                'domain'  => 'http://takeaway.onclick-eg.com/',
+                'image'   => 'https://cdn.countryflags.com/thumbs/kuwait/flag-round-250.png'
+            ],
               'testing' => BusinessSetting::where('key' , 'testing')->first()->value,
             'business_name' => BusinessSetting::where(['key' => 'business_name'])->first()->value,
             // 'business_open_time' => BusinessSetting::where(['key' => 'business_open_time'])->first()->value,
